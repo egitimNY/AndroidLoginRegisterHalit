@@ -32,12 +32,14 @@ public class LoginActivity extends AppCompatActivity {
     private TextView link_regist;
     private ProgressBar loading;
     private static String URL_LOGIN = "https://ozkayahalit.com/login.php";
-//    SessionManager sessionManager;
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        sessionManager = new SessionManager(this);
 
         loading = findViewById(R.id.loading);
         email = findViewById(R.id.email);
@@ -91,18 +93,9 @@ public class LoginActivity extends AppCompatActivity {
                                     String name = object.getString("name").trim();
                                     String email = object.getString("email").trim();
 
-                                    /*
-                                    Toast.makeText(LoginActivity.this,
-                                            "Success Login. \nYour Name : "
-                                                    +name+"\nYour Email : "
-                                                    +email, Toast.LENGTH_LONG)
-                                            .show();
-                                        */
+                                    sessionManager.createSession(name,email);
+
                                     loading.setVisibility(View.GONE);
-
-//                                    String id = object.getString("id").trim();
-
-//                                    sessionManager.createSession(name,email,id);
 
                                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                     intent.putExtra("name",name);
